@@ -8,14 +8,20 @@ public class Heap {
 	{
 		return i/2;
 	}
+	
 	public int left(int i)
 	{
 		return 2*i;
 	}
+	
 	public int right(int i)
 	{
 		return 2*i+1;
 	}
+	
+	/*
+	 * O(n*log(n)) time
+	 */
 	public void heapSort(int[] A)
 	{
 		buildMaxHeap(A);
@@ -28,12 +34,19 @@ public class Heap {
 			maxHeapify(A,1);
 		}
 	}
+	
+	/*
+	 * O(n) time
+	 */
 	public void buildMaxHeap(int[] A)
 	{
 		heapsize = A.length;
 		for(int i=A.length/2; i>0; i--)
 			maxHeapify(A,i);
 	}
+	/*
+	 * O(log(n)) time
+	 */
 	public void maxHeapify(int[] A, int i)
 	{
 		int l = 2*i;
@@ -51,5 +64,18 @@ public class Heap {
 			A[largest] = temp;
 			maxHeapify(A,largest);
 		}
+	}
+	
+	public int maximum()
+	{
+		return data[1];
+	}
+	
+	public int removeMaximum(int[] A)
+	{
+		int max = data[1];
+		data[1] = data[heapsize--];
+		maxHeapify(A,1);
+		return max;
 	}
 }

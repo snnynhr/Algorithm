@@ -2,7 +2,6 @@ package DataStructure;
 
 import java.util.TreeSet;
 
-
 public class SplayTable {
 	private BST[] table;
 	private int size;
@@ -11,6 +10,10 @@ public class SplayTable {
 	public SplayTable(int size)
 	{
 		table = new BST[size];
+		for(int i=0; i<size; i++)
+		{
+			table[i] = new BST();
+		}
 	}
 	public int hash(int key)
 	{
@@ -51,6 +54,4 @@ public class SplayTable {
 			return tree.remove(x);
 		}
 	}
-
-
 }
