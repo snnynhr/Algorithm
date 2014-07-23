@@ -1,8 +1,9 @@
 package DataStructure;
-
 /* true: red, false: black */
 
 public class RedBlackTree {
+	public boolean RED = true;
+	public boolean BLACK = false;
 	public void insert(Tree t, Node z)
 	{
 		Node x = t.root;
@@ -23,12 +24,59 @@ public class RedBlackTree {
 			y.right = z;
 		z.left = null;
 		z.right = null;
-		z.color = true;
+		z.color = RED;
 		insertFix(t,z);
 	}
 	public void insertFix(Tree t, Node z)
 	{
-		
+		while(z.p.color == RED)
+		{
+			if(z.p == z.p.p.left)
+			{
+				Node y = z.p.p.right;
+				if(y.color == RED)
+				{
+					z.p.color = BLACK;
+					y.color = BLACK;
+					z.p.p.color = RED;
+					z = z.p.p;
+				}
+				else
+				{
+					if(z == z.p.right)
+					{
+						z = z.p;
+						leftRotate(t, z);
+					}
+					z.p.color = BLACK;
+					z.p.p.color = RED;
+					rightRotate(t, z.p.p);
+				}
+			}
+			else
+			{
+				Node y = z.p.p.left;
+				if(y.color == RED)
+				{
+					z.p.color = BLACK;
+					y.color = BLACK;
+					z.p.p.color = RED;
+					z = z.p.p;
+				}
+				else
+				{
+					if(z == z.p.left)
+					{
+						z = z.p;
+						rightRotate(t, z);
+					}
+					z.p.color = BLACK;
+					z.p.p.color = RED;
+					leftRotate(t, z.p.p);
+				}
+			}
+		}
+		t.root.color = BLACK;
 	}
 	public void leftRotate(Tree t, Node x)
 	{
@@ -46,6 +94,35 @@ public class RedBlackTree {
 		y.left = x;
 		x.p = y;
 		return;
+	}
+	public void transplant(Tree t, Node u, Node v)
+	{
+		if(u.p == null)
+			t.root = v;
+		else if (u == u.p.left)
+			u.p.left = v;
+		else u.p.right = v;
+		v.p = u.p;
+	}
+	public void delete(Tree t, Node z)
+	{
+		Node x;
+		Node y = z;
+		boolean yOld = y.color;
+		if(z.left == null)
+		{
+			x = z.right;
+			transplant(t, z, z.right);
+		}
+		else if(z.right == null)
+		{
+			x = z.left;
+			transplant(t,z,z.left);
+		}
+		else
+		{
+			y = 
+		}
 	}
 	public void rightRotate(Tree t, Node x)
 	{
